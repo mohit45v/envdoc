@@ -5,8 +5,8 @@ export async function describeWithAI(needAI: any[]): Promise<Map<string, any>> {
   const aiDescriptions = new Map<string, any>();
   const varNames = needAI.map((v) => v.key || v.name || v);
 
-  // You can change this to your deployed API URL later (e.g. https://api.envdoc.dev/api/describe)
-  const API_URL = process.env.ENVDOC_API_URL || "http://localhost:3000/api/describe";
+  // You can change this to your deployed API URL later (e.g. https://api.envdoc.site/api/describe)
+  const API_URL = process.env.ENVDOC_API_URL || "https://api.envdoc.site/api/describe";
 
   try {
     const response = await fetch(API_URL, {
