@@ -62,7 +62,10 @@ const App: React.FC = () => {
       markdown += `# Environment Variables\n\n| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
       
       Object.entries(data).forEach(([key, value]: [string, any]) => {
-        markdown += `| \`${key}\` | ${value.description} | ${value.type} | ${value.required ? 'Yes' : 'No'} | \`${value.example}\` |\n`;
+        if (key === 'isFallback') return; // Skip metadata
+        if (!value || typeof value !== 'object') return; // Skip invalid entries
+        
+        markdown += `| \`${key}\` | ${value.description || 'No description'} | ${value.type || 'String'} | ${value.required ? 'Yes' : 'No'} | \`${value.example || '—'}\` |\n`;
       });
 
       setGeneratedDoc(markdown);
