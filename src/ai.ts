@@ -21,10 +21,13 @@ export async function describeWithAI(needAI: any[]): Promise<Map<string, any>> {
       throw new Error(`API returned status ${response.status}`);
     }
 
-    const data = await response.json();
-
-    // Map the JSON response back into the Map structure expected by the CLI
+    const responseData = await response.json();
+    
+    // Handle the new { data, isFallback } format vs the old direct object format
+    const data = responseData.data || responseData;
+    
     for (const [key, details] of Object.entries(data)) {
+      if (key === 'isFallback') continue; // Skip the metadata flag
       aiDescriptions.set(key, details);
     }
   } catch (error) {
