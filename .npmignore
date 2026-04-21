@@ -1,0 +1,5 @@
+backend/
+web/
+src/
+.env.example
+envdoc.nginx
