@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import { describeVarsWithGemini } from "./ai.service";
 
 dotenv.config();
@@ -8,7 +10,35 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// Security Middleware: Set robust HTTP headers
+app.use(helmet());
+
+// Strict CORS: Only allow your local environment and production Vercel domains
+const allowedOrigins = [
+  'http://localhost:5173', 
+  'https://envdoc.site',
+  'https://www.envdoc.site'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS Error: Unauthorized Domain'));
+    }
+  }
+}));
+
+// Rate Limiting: Max 50 requests per IP every 15 minutes to protect your Gemini quota
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 50,
+  message: { error: "Too many requests from this IP, please try again after 15 minutes." },
+});
+app.use("/api/describe", apiLimiter);
+
 app.use(express.json());
 
 app.post("/api/describe", async (req, res) => {
