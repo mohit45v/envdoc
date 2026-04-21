@@ -377,7 +377,7 @@ const App: React.FC = () => {
               <span className="text-2xl font-headline font-bold text-foreground">envdoc-ai</span>
             </div>
             <p className="text-lg font-body text-foreground/80 font-bold">
-              © 2024 envdoc-ai. Built with ❤️ and scribbles.
+              © {new Date().getFullYear()} envdoc-ai. Made by mohitbuilds.
             </p>
           </div>
           <div className="flex gap-8">
