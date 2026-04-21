@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>envdoc-ai | The Ethereal Terminal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#00d2fd",
+                    "inverse-surface": "#f7f9ff",
+                    "tertiary-dim": "#00e6e6",
+                    "inverse-on-surface": "#51555c",
+                    "on-tertiary-container": "#005d5d",
+                    "surface-container-highest": "#1f262e",
+                    "surface": "#0a0f14",
+                    "on-secondary-fixed": "#1d424e",
+                    "on-tertiary-fixed": "#004949",
+                    "surface-container-high": "#1a2027",
+                    "tertiary-fixed": "#00ffff",
+                    "on-primary": "#004c5e",
+                    "primary-container": "#00d2fd",
+                    "inverse-primary": "#00687e",
+                    "on-primary-fixed-variant": "#004c5d",
+                    "on-tertiary": "#006767",
+                    "on-primary-container": "#004352",
+                    "on-primary-fixed": "#002c37",
+                    "primary": "#6dddff",
+                    "outline-variant": "#43484e",
+                    "surface-container-lowest": "#000000",
+                    "on-error-container": "#ffa8a3",
+                    "secondary": "#c0e6f4",
+                    "on-error": "#490006",
+                    "primary-fixed-dim": "#00c3eb",
+                    "surface-variant": "#1f262e",
+                    "primary-dim": "#00c3eb",
+                    "surface-container": "#141a20",
+                    "on-surface": "#eaeef6",
+                    "secondary-container": "#274c57",
+                    "error-dim": "#d7383b",
+                    "secondary-fixed-dim": "#b2d7e6",
+                    "outline": "#71767c",
+                    "on-background": "#eaeef6",
+                    "on-surface-variant": "#a7abb2",
+                    "tertiary-fixed-dim": "#00efef",
+                    "tertiary": "#c1fffe",
+                    "background": "#0a0f14",
+                    "secondary-fixed": "#c0e6f4",
+                    "error": "#ff716c",
+                    "surface-tint": "#6dddff",
+                    "tertiary-container": "#00ffff",
+                    "on-tertiary-fixed-variant": "#006868",
+                    "surface-bright": "#252d35",
+                    "secondary-dim": "#b2d7e6",
+                    "surface-dim": "#0a0f14",
+                    "on-secondary-container": "#b1d6e4",
+                    "error-container": "#9f0519",
+                    "surface-container-low": "#0e1419",
+                    "on-secondary": "#315561",
+                    "on-secondary-fixed-variant": "#3b5f6b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(31, 38, 46, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(109, 221, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#1a2027]">
+<nav class="flex justify-between items-center px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-bold tracking-tighter text-[#eaeef6] font-headline">envdoc-ai</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#00D4FF] font-semibold border-b-2 border-[#00D4FF] pb-1 font-headline tracking-tight" href="#">Platform</a>
+<a class="text-[#eaeef6]/70 font-medium hover:text-[#00D4FF] transition-colors font-headline tracking-tight" href="#">API Documentation</a>
+<a class="text-[#eaeef6]/70 font-medium hover:text-[#00D4FF] transition-colors font-headline tracking-tight" href="#">Pricing</a>
+<a class="text-[#eaeef6]/70 font-medium hover:text-[#00D4FF] transition-colors font-headline tracking-tight" href="#">Changelog</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold px-6 py-2 rounded-DEFAULT hover:scale-95 transition-transform duration-300">
+                Launch App
+            </button>
+</nav>
+</header>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="relative px-8 pt-20 pb-32 overflow-hidden">
+<div class="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="z-10">
+<h1 class="text-6xl md:text-8xl font-headline font-bold text-on-surface leading-[0.9] tracking-tighter mb-8">
+                        ENVIRONMENTAL <br/> <span class="text-primary-fixed">INTELLIGENCE</span>
+</h1>
+<p class="text-on-surface-variant text-xl max-w-lg mb-12 leading-relaxed">
+                        The ethereal bridge between raw .env configurations and human-readable documentation. Automate your infrastructure context with surgical precision.
+                    </p>
+<div class="flex gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold px-8 py-4 rounded-DEFAULT shadow-[0_0_20px_rgba(109,221,255,0.2)]">
+                            Get Started
+                        </button>
+<button class="px-8 py-4 border border-outline-variant/15 text-primary font-headline font-bold rounded-DEFAULT hover:bg-surface-container-high transition-colors">
+                            View Demo
+                        </button>
+</div>
+</div>
+<div class="relative">
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/15 glow-border">
+<div class="flex gap-2 mb-4">
+<div class="w-3 h-3 rounded-full bg-error-dim"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary-dim"></div>
+<div class="w-3 h-3 rounded-full bg-primary-fixed"></div>
+</div>
+<div class="font-mono text-sm leading-relaxed">
+<div class="text-primary-fixed-dim">λ npx envdoc-ai init</div>
+<div class="text-on-surface-variant mt-2">✔ Scanning workspace...</div>
+<div class="text-on-surface-variant">✔ Detected 14 environment variables</div>
+<div class="text-on-surface-variant">✔ Generating schema context...</div>
+<div class="text-tertiary mt-4">Generating documentation... [||||||||||] 100%</div>
+<div class="text-primary mt-2">Success: ENV.md created in root directory.</div>
+</div>
+</div>
+<!-- Decorative Background Glow -->
+<div class="absolute -top-20 -right-20 w-96 h-96 bg-primary/10 blur-[100px] rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Interactive Playground -->
+<section class="bg-surface-container-low py-32 px-8">
+<div class="max-w-screen-2xl mx-auto">
+<div class="mb-20">
+<h2 class="text-4xl font-headline font-bold tracking-tight mb-4 text-on-surface">Interactive Playground</h2>
+<div class="w-24 h-1 bg-primary"></div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-1 px-1 bg-outline-variant/10 rounded-xl overflow-hidden">
+<!-- Source Column -->
+<div class="bg-surface-container p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="font-headline font-bold text-lg">.env.example</span>
+</div>
+<div class="font-mono text-sm text-on-surface-variant space-y-4">
+<p><span class="text-primary">PORT</span>=3000 <span class="text-outline"># The primary port for the API server</span></p>
+<p><span class="text-primary">DATABASE_URL</span>=postgresql://user:pass@localhost:5432/db</p>
+<p><span class="text-primary">STRIPE_SECRET_KEY</span>=sk_test_... <span class="text-outline"># Required for payment processing</span></p>
+<p><span class="text-primary">REDIS_CACHE_TTL</span>=3600</p>
+</div>
+</div>
+<!-- Output Column -->
+<div class="bg-surface-container-high p-8 relative">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-tertiary">article</span>
+<span class="font-headline font-bold text-lg">ENV.md Preview</span>
+</div>
+<div class="prose prose-invert max-w-none">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/15 text-primary">
+<th class="py-3 font-headline font-bold uppercase text-xs tracking-widest">Variable</th>
+<th class="py-3 font-headline font-bold uppercase text-xs tracking-widest">Description</th>
+<th class="py-3 font-headline font-bold uppercase text-xs tracking-widest">Type</th>
+</tr>
+</thead>
+<tbody class="text-on-surface-variant text-sm">
+<tr class="border-b border-outline-variant/10">
+<td class="py-4 font-mono text-on-surface">PORT</td>
+<td class="py-4">The primary port for the API server</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-variant rounded text-xs">Number</span></td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="py-4 font-mono text-on-surface">DATABASE_URL</td>
+<td class="py-4">PostgreSQL connection string</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-variant rounded text-xs">String</span></td>
+</tr>
+<tr>
+<td class="py-4 font-mono text-on-surface">REDIS_TTL</td>
+<td class="py-4">Cache duration in seconds</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-variant rounded text-xs">Integer</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="absolute top-8 right-8">
+<div class="flex items-center gap-2 text-tertiary text-xs font-headline font-bold bg-tertiary/10 px-3 py-1 rounded-full uppercase tracking-widest">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                Live Sync
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="py-32 px-8">
+<div class="max-w-screen-2xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<h2 class="text-5xl font-headline font-bold tracking-tighter mb-6 text-on-surface">System Architecture</h2>
+<p class="text-on-surface-variant text-lg">A zero-config workflow designed to integrate seamlessly into your CI/CD pipeline and local development environment.</p>
+</div>
+<div class="text-primary font-headline font-bold text-sm uppercase tracking-widest">Step 01 — 03</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Step 1 -->
+<div class="glass-panel p-10 rounded-xl border border-outline-variant/15 hover:bg-surface-container-highest transition-all duration-500 group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl">terminal</span>
+</div>
+<h3 class="text-2xl font-headline font-bold mb-4 text-on-surface">Integrate</h3>
+<p class="text-on-surface-variant leading-relaxed">Install the CLI tool with a single command. It works with npm, yarn, pnpm, and even as a standalone binary for legacy systems.</p>
+</div>
+<!-- Step 2 -->
+<div class="glass-panel p-10 rounded-xl border border-outline-variant/15 hover:bg-surface-container-highest transition-all duration-500 group">
+<div class="w-12 h-12 bg-tertiary/10 rounded-lg flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-tertiary text-3xl">psychology</span>
+</div>
+<h3 class="text-2xl font-headline font-bold mb-4 text-on-surface">Analyze</h3>
+<p class="text-on-surface-variant leading-relaxed">Our AI-driven parser scans your environment variables and infers context from comments, types, and naming conventions.</p>
+</div>
+<!-- Step 3 -->
+<div class="glass-panel p-10 rounded-xl border border-outline-variant/15 hover:bg-surface-container-highest transition-all duration-500 group">
+<div class="w-12 h-12 bg-primary-fixed/10 rounded-lg flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary-fixed text-3xl">auto_awesome</span>
+</div>
+<h3 class="text-2xl font-headline font-bold mb-4 text-on-surface">Generate</h3>
+<p class="text-on-surface-variant leading-relaxed">A beautifully formatted ENV.md is generated, ready to be committed to your repository for team-wide clarity.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 px-8 mb-20">
+<div class="max-w-screen-2xl mx-auto glass-panel p-16 rounded-xl border border-outline-variant/15 text-center relative overflow-hidden">
+<div class="relative z-10">
+<h2 class="text-4xl md:text-6xl font-headline font-bold tracking-tighter mb-8 text-on-surface">READY TO DOCUMENT?</h2>
+<p class="text-on-surface-variant text-xl mb-12 max-w-xl mx-auto">Join 5,000+ teams who have automated their infrastructure context.</p>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold px-12 py-5 rounded-DEFAULT text-lg hover:scale-105 transition-transform duration-300">
+                        Launch Dashboard
+                    </button>
+</div>
+<!-- Abstract BG Elements -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-r from-tertiary/5 to-transparent"></div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#000000] w-full py-12 px-8 border-t border-[#43484e]/15">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 max-w-screen-2xl mx-auto">
+<div class="text-xl font-bold text-[#00D4FF] font-headline">envdoc-ai</div>
+<div class="flex gap-8">
+<a class="text-[#eaeef6]/50 hover:text-[#00D4FF] transition-colors font-['Space_Grotesk'] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">Privacy Policy</a>
+<a class="text-[#eaeef6]/50 hover:text-[#00D4FF] transition-colors font-['Space_Grotesk'] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">Terms of Service</a>
+<a class="text-[#eaeef6]/50 hover:text-[#00D4FF] transition-colors font-['Space_Grotesk'] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">Security</a>
+<a class="text-[#eaeef6]/50 hover:text-[#00D4FF] transition-colors font-['Space_Grotesk'] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">Status</a>
+<a class="text-[#eaeef6]/50 hover:text-[#00D4FF] transition-colors font-['Space_Grotesk'] text-sm uppercase tracking-widest hover:translate-x-1 transition-transform duration-200" href="#">Contact</a>
+</div>
+<div class="text-[#eaeef6]/40 font-['Space_Grotesk'] text-xs uppercase tracking-[0.2em]">
+                © 2024 envdoc-ai. All rights reserved. Precise Logic. Ethereal Terminal.
+            </div>
+</div>
+</footer>
+</body></html>

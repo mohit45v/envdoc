@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>envdoc-ai | The Neon Nebula</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-dim": "#c74c2f",
+                        "surface-variant": "#25252f",
+                        "primary-fixed-dim": "#95eb00",
+                        "inverse-surface": "#fcf8ff",
+                        "on-error-container": "#ff9b82",
+                        "on-primary-fixed-variant": "#3e6600",
+                        "primary-dim": "#97ee00",
+                        "error-container": "#881f05",
+                        "surface-container-lowest": "#000000",
+                        "on-primary-container": "#385d00",
+                        "tertiary": "#d7baff",
+                        "secondary-container": "#242437",
+                        "background": "#0e0e13",
+                        "outline": "#757480",
+                        "surface-bright": "#2b2b36",
+                        "on-secondary": "#3f3e52",
+                        "on-secondary-fixed": "#424155",
+                        "on-secondary-fixed-variant": "#5e5d72",
+                        "inverse-on-surface": "#55545b",
+                        "primary-container": "#a2fe0f",
+                        "on-background": "#e6e4f1",
+                        "surface": "#0e0e13",
+                        "inverse-primary": "#416a00",
+                        "secondary": "#c6c4dd",
+                        "surface-container-highest": "#25252f",
+                        "primary-fixed": "#9ffb06",
+                        "on-tertiary-container": "#481b82",
+                        "surface-dim": "#0e0e13",
+                        "secondary-fixed-dim": "#dad7f1",
+                        "on-tertiary-fixed": "#2f0062",
+                        "tertiary-container": "#cca9ff",
+                        "tertiary-fixed-dim": "#c197ff",
+                        "surface-container-low": "#131319",
+                        "tertiary-dim": "#b489f3",
+                        "secondary-fixed": "#e8e5ff",
+                        "on-tertiary-fixed-variant": "#51268c",
+                        "on-secondary-container": "#a4a1b9",
+                        "on-error": "#450900",
+                        "on-primary-fixed": "#2a4700",
+                        "on-surface-variant": "#abaab6",
+                        "secondary-dim": "#b9b6cf",
+                        "surface-container": "#191920",
+                        "on-surface": "#e6e4f1",
+                        "primary": "#ddffb0",
+                        "on-tertiary": "#52278d",
+                        "surface-container-high": "#1f1f27",
+                        "outline-variant": "#474752",
+                        "tertiary-fixed": "#cca9ff",
+                        "error": "#fe7453",
+                        "surface-tint": "#ddffb0",
+                        "on-primary": "#3e6600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0e0e13;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .aura-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgba(221, 255, 176, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, rgba(215, 186, 255, 0.08) 0%, transparent 40%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(25, 25, 32, 0.4);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<div class="aura-mesh"></div>
+<!-- TopAppBar -->
+<nav class="sticky top-4 z-50 flex items-center justify-between px-8 py-3 w-full bg-[#0e0e13]/60 dark:bg-[#0e0e13]/60 backdrop-blur-3xl rounded-full mx-auto mt-4 max-w-6xl outline outline-1 outline-white/10 shadow-[0px_24px_48px_rgba(0,0,0,0.4)] shadow-[#A3FF12]/5 transition-transform duration-200 active:scale-95">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#A3FF12]" data-icon="terminal">terminal</span>
+<span class="text-xl font-black text-white dark:text-[#e6e4f1] tracking-tighter">envdoc-ai</span>
+</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-[#A3FF12] font-bold border-b-2 border-[#A3FF12] pb-1 font-['Plus_Jakarta_Sans'] tracking-[-0.02em]" href="#">Home</a>
+<a class="text-[#e6e4f1]/60 hover:text-[#e6e4f1] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-semibold" href="#">Docs</a>
+<a class="text-[#e6e4f1]/60 hover:text-[#e6e4f1] transition-colors font-['Plus_Jakarta_Sans'] tracking-[-0.02em] font-semibold" href="#">GitHub</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-all">Launch App</button>
+</nav>
+<main class="max-w-7xl mx-auto px-6 pt-12">
+<!-- Hero Section -->
+<section class="relative flex flex-col items-center text-center py-20 md:py-32 overflow-hidden">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-tertiary/10 blur-[120px] rounded-full"></div>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-primary text-[10px] font-bold tracking-[0.2em] uppercase mb-8 outline outline-1 outline-primary/20">
+                v1.0.0 is live
+            </span>
+<h1 class="text-5xl md:text-8xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+                Document your .env <br/>
+<span class="bg-gradient-to-r from-primary via-primary-dim to-tertiary bg-clip-text text-transparent">files instantly.</span>
+</h1>
+<p class="text-on-surface-variant text-lg md:text-xl max-w-2xl mb-12 font-medium leading-relaxed">
+                Transform cryptic environment variables into elegant, structured markdown documentation in seconds. Built for the modern developer.
+            </p>
+<!-- Pill-shaped terminal command -->
+<div class="glass-panel p-1 rounded-full flex items-center gap-4 outline outline-1 outline-white/10 shadow-2xl">
+<div class="bg-surface-container-lowest px-6 py-3 rounded-full flex items-center gap-3">
+<span class="text-primary-dim font-mono text-sm">$ npx envdoc-ai init</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm cursor-pointer hover:text-white" data-icon="content_copy">content_copy</span>
+</div>
+<button class="bg-white/5 hover:bg-white/10 px-6 py-3 rounded-full text-sm font-bold transition-all text-white">
+                    View Demo
+                </button>
+</div>
+</section>
+<!-- Interactive Playground Section -->
+<section class="py-24">
+<div class="mb-16 text-center">
+<h2 class="text-3xl md:text-5xl font-bold mb-4 tracking-tight">The Transformation</h2>
+<p class="text-on-surface-variant">From chaos to clarity, automatically.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<!-- Source Code -->
+<div class="bg-surface-container-low p-8 rounded-xl outline outline-1 outline-white/5 shadow-2xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+<span class="material-symbols-outlined text-6xl" data-icon="code">code</span>
+</div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error-dim"></span>
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+</div>
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">.env.example</span>
+</div>
+<pre class="font-mono text-sm leading-relaxed text-on-surface/80"><span class="text-tertiary"># Database Configuration</span>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=supersecret <span class="text-error-dim"># Do not commit!</span>
+
+<span class="text-tertiary"># Auth Services</span>
+STRIPE_API_KEY=pk_test_...
+NEXTAUTH_SECRET=...
+                    </pre>
+</div>
+<!-- Result Documentation -->
+<div class="bg-surface-container-highest p-8 rounded-xl outline outline-1 outline-primary/20 shadow-[0_0_50px_rgba(221,255,176,0.05)] relative overflow-hidden">
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 blur-3xl rounded-full"></div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+<span class="text-xs font-bold text-primary uppercase tracking-widest">ENV.md</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-1 bg-primary/10 text-primary rounded text-[10px] font-bold">AUTO-GENERATED</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<h3 class="text-lg font-bold border-b border-white/5 pb-2">Database</h3>
+<div class="grid grid-cols-2 text-sm gap-2">
+<span class="text-on-surface-variant">DB_HOST</span>
+<span class="text-on-surface font-mono">localhost</span>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold border-b border-white/5 pb-2">Auth</h3>
+<div class="grid grid-cols-2 text-sm gap-2">
+<span class="text-on-surface-variant">STRIPE_KEY</span>
+<span class="text-primary font-mono">Required</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works -->
+<section class="py-24 border-t border-white/5">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Step 1 -->
+<div class="group">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center mb-8 outline outline-1 outline-white/10 group-hover:outline-primary/40 transition-all">
+<span class="material-symbols-outlined text-3xl text-primary" data-icon="terminal">terminal</span>
+</div>
+<h4 class="text-xl font-bold mb-4">Initialize</h4>
+<p class="text-on-surface-variant leading-relaxed">Run a single command to scan your project. No configuration needed to get started.</p>
+</div>
+<!-- Step 2 -->
+<div class="group">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center mb-8 outline outline-1 outline-white/10 group-hover:outline-tertiary/40 transition-all">
+<span class="material-symbols-outlined text-3xl text-tertiary" data-icon="psychology">psychology</span>
+</div>
+<h4 class="text-xl font-bold mb-4">AI Analysis</h4>
+<p class="text-on-surface-variant leading-relaxed">Our engine identifies variable types, default values, and provides descriptions automatically.</p>
+</div>
+<!-- Step 3 -->
+<div class="group">
+<div class="w-16 h-16 rounded-xl bg-surface-container-high flex items-center justify-center mb-8 outline outline-1 outline-white/10 group-hover:outline-primary-dim/40 transition-all">
+<span class="material-symbols-outlined text-3xl text-primary-dim" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h4 class="text-xl font-bold mb-4">Export</h4>
+<p class="text-on-surface-variant leading-relaxed">Generate beautiful Markdown or JSON schema files that keep your team perfectly in sync.</p>
+</div>
+</div>
+</section>
+<!-- Visual Feature Grid (Bento) -->
+<section class="py-24">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+<div class="md:col-span-8 bg-surface-container-low rounded-xl p-10 outline outline-1 outline-white/5 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="relative z-10">
+<h3 class="text-3xl font-bold mb-4">CI/CD Integrated</h3>
+<p class="text-on-surface-variant max-w-md mb-8">Never ship without documentation. Our GitHub Action ensures your ENV.md is always up to date with your latest commits.</p>
+<div class="flex gap-4">
+<img class="w-12 h-12 rounded-lg grayscale hover:grayscale-0 transition-all" data-alt="GitHub Actions logo in a minimalist white outline style on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdPYXbHRuMtdtCRnCemLOdpqvQyVrBPuNs266vch8fE8pcuRqCwNdmnIEWgg6v-ojYkaDeZOs2Z70nXfaXMLkiNzQiQCU_PaKuAcAbxu5ewG8EXqZ3ySRnW9YksyZF6X8GgHqZR3QhS5F0-kIregJCFqJ1H8B-wvL2IioPVmK-6glQa3L35WLG8FBiqj_e1PiAgHMwpw1ChemHAxW5J3K6gFecr8Ho_fEA-gpE5XSuYyEO2c9GS6RfLJp-Lw40KcF4hBmwtv_WBLc"/>
+<img class="w-12 h-12 rounded-lg grayscale hover:grayscale-0 transition-all" data-alt="GitLab logo in a minimalist white outline style on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy_qRjZbFugP2Ueu0nkOkhhF9WZPQBXuJDz2Ci0SMROm587aIo_GVH_GLgtaBxVd6c2lCFRsvSukq_KzHmKjy2WGaw2BvUmhAaS8IefcXu16bsmzHCJZeJpKweQTdeM171aHwhBpNxF82PAVhQ-p-AdoJydqykut4vxltC48HE26hGK9eYsmHZ-ZvE0lx2M4MNarYh1482WRYL-VYmVP-KcVZHbwVlcF5MaCzsvc-xJjtPv3JALn5KV2ZYAHNJMimO5APtaORR9zE"/>
+<img class="w-12 h-12 rounded-lg grayscale hover:grayscale-0 transition-all" data-alt="Vercel logo in a minimalist white outline style on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClI3C-7ARP_zPzx4TTAhY4P7Cc4-J77f_RmcS7RAldRejWZ98Qyo-lMBfEW1n2JM5pyma_fLFrVOm7T3_Mj5s8-DJmV62SrgXhWPAgT-Mu16t_erAWlzCoFNecF6_jUrDpkS9k00_eOwczgYJFslZgoRHIH45gkQrrryX9naCWtHMjrJ01lFUa4aDecO-z2amx3kUKU6ZMjPRhL7WKN0fDv2A2WsfHNGhlwOGTO7xodJBVtei7H3OiII3QHaK3wzUrV8VGDxV0r-U"/>
+</div>
+</div>
+<div class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4">
+<span class="material-symbols-outlined text-[200px] opacity-5 text-white" data-icon="sync_alt">sync_alt</span>
+</div>
+</div>
+<div class="md:col-span-4 bg-primary rounded-xl p-10 flex flex-col justify-end group">
+<span class="material-symbols-outlined text-6xl text-on-primary mb-8 transition-transform group-hover:scale-110" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<h3 class="text-3xl font-bold text-on-primary mb-4 tracking-tight leading-tight">Privacy First Architecture.</h3>
+<p class="text-on-primary/80 font-medium">Your secrets never leave your machine. Processing happens locally.</p>
+</div>
+<div class="md:col-span-4 bg-tertiary rounded-xl p-10 flex flex-col justify-end relative overflow-hidden">
+<div class="absolute top-4 right-4">
+<span class="material-symbols-outlined text-4xl text-on-tertiary/20" data-icon="dark_mode">dark_mode</span>
+</div>
+<h3 class="text-3xl font-bold text-on-tertiary mb-2">Native Dark Mode.</h3>
+<p class="text-on-tertiary/80 font-medium">Designed for the late-night sessions.</p>
+</div>
+<div class="md:col-span-8 bg-surface-container-highest rounded-xl p-10 outline outline-1 outline-white/5 flex items-center justify-between">
+<div>
+<h3 class="text-3xl font-bold mb-2">Zero Config.</h3>
+<p class="text-on-surface-variant">Works out of the box with Vite, Next.js, and more.</p>
+</div>
+<span class="material-symbols-outlined text-5xl text-on-surface-variant" data-icon="bolt">bolt</span>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 text-center">
+<div class="bg-gradient-to-br from-surface-container-low to-surface-container-high p-16 rounded-xl outline outline-1 outline-white/5 relative overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 blur-[120px]"></div>
+<h2 class="text-4xl md:text-6xl font-bold mb-8">Ready to clear the fog?</h2>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6">
+<button class="w-full md:w-auto bg-primary text-on-primary px-10 py-5 rounded-full font-extrabold text-lg hover:scale-105 transition-transform">Get Started Free</button>
+<button class="w-full md:w-auto glass-panel px-10 py-5 rounded-full font-bold text-lg outline outline-1 outline-white/10 hover:bg-white/5">Read the Docs</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0e0e13] dark:bg-[#0e0e13] border-t border-white/5 py-12 px-8 mt-24">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#A3FF12]" data-icon="terminal">terminal</span>
+<span class="text-lg font-bold text-[#e6e4f1]">envdoc-ai</span>
+</div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm tracking-wider uppercase text-slate-500">© 2024 envdoc-ai. Built for the Neon Nebula.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wider uppercase text-slate-500 hover:text-[#A3FF12] transition-colors" href="#">Documentation</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wider uppercase text-slate-500 hover:text-[#A3FF12] transition-colors" href="#">Changelog</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wider uppercase text-slate-500 hover:text-[#A3FF12] transition-colors" href="#">Security</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wider uppercase text-slate-500 hover:text-[#A3FF12] transition-colors" href="#">Status</a>
+</div>
+</div>
+</footer>
+</body></html>

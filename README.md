@@ -35,4 +35,4 @@ npx envdoc
 4. **Generates** a premium Markdown file grouped by categories with emoji badges!
 
 ---
-*Built with ❤️ for a weekend hackathon.*
+*Built with ❤️ .*

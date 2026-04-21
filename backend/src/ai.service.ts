@@ -1,12 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
 export async function describeVarsWithGemini(vars: any[]): Promise<Record<string, any>> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is missing");
   }
+
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash" });
 
   const prompt = `You are an expert developer. You are analyzing a list of environment variables.
 For each variable, provide a short, accurate description, the likely type (String, Number, Boolean, URL, Secret), and a realistic example value.
@@ -27,6 +27,16 @@ ${JSON.stringify(vars, null, 2)}`;
     return JSON.parse(cleanedResponse);
   } catch (error) {
     console.error("Error calling Gemini API:", error);
-    throw error;
+    console.log("Falling back to mock data due to API failure/rate limit...");
+    const mockObj: Record<string, any> = {};
+    for (const v of vars) {
+      mockObj[v] = {
+         description: `Auto-generated fallback description for ${v}. (Your API Key is currently rate-limited)`,
+         type: "String",
+         required: true,
+         example: "example_value_123"
+      };
+    }
+    return mockObj;
   }
 }
