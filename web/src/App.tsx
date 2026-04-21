@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import { docsMarkdown } from './docsContent';
 
 const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'home' | 'docs'>('home');
   const [envInput, setEnvInput] = useState(`# Database Configuration\nDB_HOST=localhost\nDB_USER=root\nDB_PASS=supersecret\n\n# Auth Services\nSTRIPE_API_KEY=pk_test_...\nNEXTAUTH_SECRET=...`);
   const [generatedDoc, setGeneratedDoc] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
@@ -73,9 +75,9 @@ const App: React.FC = () => {
           <span className="text-2xl font-headline font-bold text-foreground">envdoc-ai</span>
         </div>
         <div className="hidden md:flex gap-8 items-center">
-          <a className="text-foreground font-bold border-b-2 border-foreground border-dashed pb-1 hover-jiggle" href="#">Home</a>
-          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="#">Docs</a>
-          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="https://github.com/mohit45v/envdoc">GitHub</a>
+          <a className="text-foreground font-bold border-b-2 border-foreground border-dashed pb-1 hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('home'); }}>Home</a>
+          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('docs'); window.scrollTo(0, 0); }}>Docs</a>
+          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="https://github.com/mohit45v/envdoc" target="_blank" rel="noreferrer">GitHub</a>
           <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="https://www.npmjs.com/package/envdoc-ai" target="_blank" rel="noreferrer">NPM</a>
         </div>
         <button 
@@ -87,6 +89,8 @@ const App: React.FC = () => {
       </nav>
 
       <main className="max-w-5xl mx-auto px-6 pt-12">
+        {activeTab === 'home' ? (
+          <>
         {/* Hero Section */}
         <section className="relative flex flex-col items-center text-center py-20 md:py-32">
           
@@ -250,7 +254,7 @@ const App: React.FC = () => {
                   <motion.div 
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="prose prose-sm max-w-none font-body text-lg"
+                    className="prose prose-sm max-w-none font-body text-lg w-full overflow-auto max-h-[500px] border-[3px] border-border rounded-wobblyMd shadow-inner bg-white/50 p-4"
                   >
                     <div 
                       className="markdown-content"
@@ -339,12 +343,27 @@ const App: React.FC = () => {
               <button className="w-full md:w-auto bg-white border-[3px] border-border shadow-hard active:shadow-none active:translate-x-[4px] active:translate-y-[4px] text-foreground px-10 py-4 rounded-wobbly font-body font-bold text-2xl hover:bg-accent hover:text-white transition-all transform rotate-2">
                 Get Started Free
               </button>
-              <button className="w-full md:w-auto bg-muted border-[3px] border-border shadow-hard active:shadow-none active:translate-x-[4px] active:translate-y-[4px] text-foreground px-10 py-4 rounded-wobbly font-body font-bold text-2xl hover:bg-secondary-accent hover:text-white transition-all transform -rotate-2">
+              <button 
+                onClick={() => { setActiveTab('docs'); window.scrollTo(0, 0); }}
+                className="w-full md:w-auto bg-muted border-[3px] border-border shadow-hard active:shadow-none active:translate-x-[4px] active:translate-y-[4px] text-foreground px-10 py-4 rounded-wobbly font-body font-bold text-2xl hover:bg-secondary-accent hover:text-white transition-all transform -rotate-2"
+              >
                 Read the Docs
               </button>
             </div>
           </div>
         </section>
+        </>
+        ) : (
+          <section className="py-12 md:py-20">
+            <div className="bg-[#fff9c4] border-[3px] border-border p-8 md:p-12 rounded-wobblyLg shadow-hard relative mb-12">
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-accent border-[3px] border-border shadow-[2px_2px_0px_0px_#2d2d2d] z-10"></div>
+              <div 
+                className="prose prose-sm md:prose-lg max-w-none font-body text-lg markdown-content mt-6"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parse(docsMarkdown) as string) }}
+              />
+            </div>
+          </section>
+        )}
       </main>
 
       {/* Footer */}
@@ -360,9 +379,9 @@ const App: React.FC = () => {
             </p>
           </div>
           <div className="flex gap-8">
-            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="#">Docs</a>
+            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('docs'); window.scrollTo(0, 0); }}>Docs</a>
             <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="#">Changelog</a>
-            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="#">GitHub</a>
+            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="https://github.com/mohit45v/envdoc" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
       </footer>
@@ -370,6 +389,7 @@ const App: React.FC = () => {
       <style>{`
         .markdown-content table {
           width: 100%;
+          min-width: 700px;
           border-collapse: separate;
           border-spacing: 0;
           font-size: 1.1rem;
@@ -377,8 +397,6 @@ const App: React.FC = () => {
           border: 3px solid #2d2d2d;
           border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
           overflow: hidden;
-          table-layout: fixed;
-          word-wrap: break-word;
         }
         .markdown-content th {
           background: #e5e0d8;
@@ -398,7 +416,6 @@ const App: React.FC = () => {
           border-bottom: 2px dashed #2d2d2d;
           border-right: 2px dashed #2d2d2d;
           color: #2d2d2d;
-          overflow-wrap: anywhere;
         }
         .markdown-content td:last-child {
           border-right: none;
@@ -414,7 +431,6 @@ const App: React.FC = () => {
           color: #2d5da1;
           font-family: monospace;
           font-weight: bold;
-          word-break: break-all;
         }
         .markdown-content h1 {
           font-family: 'Kalam', cursive;
