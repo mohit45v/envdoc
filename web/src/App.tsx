@@ -42,12 +42,28 @@ const App: React.FC = () => {
         body: JSON.stringify({ vars: keys }),
       });
 
-      if (!response.ok) throw new Error('Failed to generate documentation.');
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (e) {
+        throw new Error('Failed to parse response from server.');
+      }
 
-      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.error || responseData.message || 'Failed to generate documentation.');
+      }
+      
+      const isFallback = responseData.isFallback;
+      const data = responseData.data || responseData; // Handle both new and old formats
       
       // Convert JSON response to Markdown table
-      let markdown = `# Environment Variables\n\n| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
+      let markdown = '';
+      
+      if (isFallback) {
+        markdown += `> ⚠️ **API Rate Limit Exceeded**\n> Showing generic fallback documentation template. Please try again later for AI-generated descriptions.\n\n`;
+      }
+      
+      markdown += `# Environment Variables\n\n| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
       
       Object.entries(data).forEach(([key, value]: [string, any]) => {
         markdown += `| \`${key}\` | ${value.description} | ${value.type} | ${value.required ? 'Yes' : 'No'} | \`${value.example}\` |\n`;
