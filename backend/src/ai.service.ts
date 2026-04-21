@@ -40,7 +40,7 @@ ${JSON.stringify(vars, null, 2)}`;
       else if (vUpper.includes('IS_') || vUpper.includes('ENABLE')) { type = 'Boolean'; example = 'true'; }
 
       mockObj[v] = {
-         description: `Configuration value for ${v}.`,
+         description: `Description for ${v}`,
          type,
          required: false,
          example

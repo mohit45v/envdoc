@@ -59,10 +59,6 @@ const App: React.FC = () => {
       // Convert JSON response to Markdown table
       let markdown = '';
       
-      if (isFallback) {
-        markdown += `> ⚠️ **API Rate Limit Exceeded**\n> Showing generic fallback documentation template. Please try again later for AI-generated descriptions.\n\n`;
-      }
-      
       markdown += `# Environment Variables\n\n| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
       
       Object.entries(data).forEach(([key, value]: [string, any]) => {
