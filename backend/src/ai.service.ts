@@ -31,10 +31,10 @@ ${JSON.stringify(vars, null, 2)}`;
     const mockObj: Record<string, any> = {};
     for (const v of vars) {
       mockObj[v] = {
-         description: `Auto-generated fallback description for ${v}. (Your API Key is currently rate-limited)`,
+         description: `Environment configuration for ${v}.`,
          type: "String",
          required: true,
-         example: "example_value_123"
+         example: "your_value_here"
       };
     }
     return mockObj;
