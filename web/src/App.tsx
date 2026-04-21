@@ -34,7 +34,9 @@ const App: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('https://api.envdoc.site/api/describe', {
+      const API_URL = import.meta.env.DEV ? 'http://localhost:3000/api/describe' : 'https://api.envdoc.site/api/describe';
+      
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ vars: keys }),
@@ -70,8 +72,8 @@ const App: React.FC = () => {
       
       {/* Navigation */}
       <nav className="sticky top-4 z-50 flex items-center justify-between px-8 py-3 w-full bg-background border-[3px] border-border rounded-wobblyLg shadow-hard mx-auto mt-4 max-w-6xl transition-transform duration-200 hover:-rotate-1">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-foreground">edit_document</span>
+        <div className="flex items-center gap-3">
+          <img src="/logo.png" alt="envdoc-ai logo" className="w-10 h-10 rounded-wobbly border-2 border-border shadow-[2px_2px_0px_0px_#2d2d2d]" />
           <span className="text-2xl font-headline font-bold text-foreground">envdoc-ai</span>
         </div>
         <div className="hidden md:flex gap-8 items-center">
@@ -370,8 +372,8 @@ const App: React.FC = () => {
       <footer className="border-t-[4px] border-dashed border-border/30 py-12 px-8 mt-24">
         <div className="flex flex-col md:flex-row justify-between items-center max-w-5xl mx-auto gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-foreground">edit_document</span>
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="envdoc-ai logo" className="w-10 h-10 rounded-wobbly border-2 border-border shadow-[2px_2px_0px_0px_#2d2d2d]" />
               <span className="text-2xl font-headline font-bold text-foreground">envdoc-ai</span>
             </div>
             <p className="text-lg font-body text-foreground/80 font-bold">
