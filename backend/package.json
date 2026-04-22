@@ -5,21 +5,23 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
-    "build": "tsup src/server.ts --format cjs --dts",
+    "build": "tsup src/server.ts --format esm --dts --clean",
     "start": "node dist/server.js",
+    "seed": "npx tsx src/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.2",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "mongoose": "^9.5.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

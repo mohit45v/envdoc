@@ -25,4 +25,14 @@ export const knownVars: Record<string, { description: string; type: string; requ
   DISCORD_TOKEN: { description: "Discord Bot authentication token.", type: "Secret", required: true, example: "OTk..." },
   GITHUB_ID: { description: "GitHub OAuth Application Client ID.", type: "String", required: true, example: "Iv1..." },
   GITHUB_SECRET: { description: "GitHub OAuth Application Client Secret.", type: "Secret", required: true, example: "a1b2c3..." },
+  // Database Variations
+  DB_HOST: { description: "Database server hostname.", type: "String", required: false, example: "localhost" },
+  DB_PORT: { description: "Database server port.", type: "Number", required: false, example: "5432" },
+  DB_USER: { description: "Database username.", type: "String", required: false, example: "admin" },
+  DB_PASS: { description: "Database password.", type: "Secret", required: false, example: "password123" },
+  DB_NAME: { description: "Database name.", type: "String", required: false, example: "my_app_db" },
+  // Auth Variations
+  STRIPE_API_KEY: { description: "Stripe API Key (Secret or Public).", type: "Secret", required: true, example: "sk_test_..." },
+  NEXTAUTH_SECRET: { description: "Secret used to hash tokens and sign cookies in NextAuth.", type: "Secret", required: true, example: "your_next_auth_secret" },
+  NEXTAUTH_URL: { description: "The base URL of your site for NextAuth callbacks.", type: "URL", required: false, example: "http://localhost:3000" },
 };

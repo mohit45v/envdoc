@@ -3,9 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import { describeVarsWithGemini } from "./ai.service";
+import { describeVarsWithGemini } from "./ai.service.js";
+import { connectDB } from "./db.js";
 
 dotenv.config();
+
+// Connect to Database
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
