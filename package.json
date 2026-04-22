@@ -1,6 +1,6 @@
 {
   "name": "envdoc-ai",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Beautiful, AI-powered .env documentation generator.",
   "main": "dist/index.js",
   "bin": {

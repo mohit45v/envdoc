@@ -57,30 +57,53 @@ Do not include markdown code blocks or any other text around the JSON.
 Variables to analyze:
 ${JSON.stringify(unknownVars, null, 2)}`;
 
+  // 4. If we have unknown variables, call Gemini AI with Retry Logic
   try {
-    const result = await model.generateContent(prompt);
-    const response = result.response.text();
+    let responseText = "";
+    let attempts = 0;
+    const maxAttempts = 2;
 
-    const cleanedResponse = response.replace(/^```json/im, "").replace(/```$/im, "").trim();
+    while (attempts < maxAttempts) {
+      try {
+        const result = await model.generateContent(prompt);
+        responseText = result.response.text();
+        break; // Success!
+      } catch (err: any) {
+        attempts++;
+        if (err.status === 429 && attempts < maxAttempts) {
+          console.log(`Rate limited (429). Retrying in 2s... (Attempt ${attempts}/${maxAttempts})`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+          throw err; // Give up or different error
+        }
+      }
+    }
+
+    const cleanedResponse = responseText.replace(/^```json/im, "").replace(/```$/im, "").trim();
     const aiDescriptions = JSON.parse(cleanedResponse);
-
-    // 4. Save the newly learned variables to MongoDB
+    
+    // 5. Save the newly learned variables to MongoDB
     const toSave = Object.entries(aiDescriptions).map(([key, details]: [string, any]) => ({
       key,
-      ...details
+      description: details.description,
+      type: details.type || "String",
+      example: details.example || "",
+      category: details.category || "General"
     }));
 
     if (toSave.length > 0) {
-      // Use upsert to avoid duplicate key errors
-      for (const doc of toSave) {
-        await Variable.findOneAndUpdate({ key: doc.key }, doc, { upsert: true });
-      }
-      console.log(`Successfully learned and saved ${toSave.length} new variables to MongoDB.`);
+      await Variable.bulkWrite(toSave.map(item => ({
+        updateOne: {
+          filter: { key: item.key },
+          update: { $set: item },
+          upsert: true
+        }
+      })));
     }
 
     return { data: { ...resultObj, ...aiDescriptions }, isFallback: false };
   } catch (error) {
-    console.error("Error calling Gemini API:", error);
+    console.error("Final error calling Gemini API:", error);
     return fallbackToMock(unknownVars, resultObj);
   }
 }
