@@ -5,6 +5,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { describeVarsWithGemini } from "./ai.service.js";
 import { connectDB } from "./db.js";
+import Variable from "./models/Variable.js";
 
 dotenv.config();
 
@@ -60,6 +61,26 @@ app.post("/api/describe", async (req, res) => {
   } catch (error: any) {
     console.error("Backend Error:", error);
     res.status(500).json({ error: "Internal server error while fetching AI descriptions.", details: error.message });
+  }
+});
+
+// GET /api/variables: Fetch all learned variables from the Shared Brain
+app.get("/api/variables", async (req, res) => {
+  try {
+    const vars = await Variable.find({}).sort({ category: 1, key: 1 });
+    res.json(vars);
+  } catch (error: any) {
+    res.status(500).json({ error: "Failed to fetch variables", details: error.message });
+  }
+});
+
+// GET /api/stats: Get the total count of variables learned
+app.get("/api/stats", async (req, res) => {
+  try {
+    const count = await Variable.countDocuments();
+    res.json({ total: count });
+  } catch (error: any) {
+    res.status(500).json({ error: "Failed to fetch stats", details: error.message });
   }
 });
 

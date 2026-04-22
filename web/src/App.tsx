@@ -4,13 +4,46 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { Analytics } from '@vercel/analytics/react';
 import { docsMarkdown } from './docsContent';
+import { changelogData } from './changelogContent';
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'docs'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'docs' | 'explorer' | 'changelog'>('home');
   const [envInput, setEnvInput] = useState(`# Database Configuration\nDB_HOST=localhost\nDB_USER=root\nDB_PASS=supersecret\n\n# Auth Services\nSTRIPE_API_KEY=pk_test_...\nNEXTAUTH_SECRET=...`);
   const [generatedDoc, setGeneratedDoc] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [stats, setStats] = useState<{ total: number }>({ total: 0 });
+  const [explorerVars, setExplorerVars] = useState<any[]>([]);
+  const [isExplorerLoading, setIsExplorerLoading] = useState(false);
+
+  // Fetch stats on mount
+  React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : 'https://api.envdoc.site';
+        const res = await fetch(`${API_BASE}/api/stats`);
+        const data = await res.json();
+        setStats(data);
+      } catch (e) {
+        console.error("Failed to fetch stats", e);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  const fetchExplorerVars = async () => {
+    setIsExplorerLoading(true);
+    try {
+      const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : 'https://api.envdoc.site';
+      const res = await fetch(`${API_BASE}/api/variables`);
+      const data = await res.json();
+      setExplorerVars(data);
+    } catch (e) {
+      console.error("Failed to fetch explorer vars", e);
+    } finally {
+      setIsExplorerLoading(false);
+    }
+  };
 
   const extractEnvKeys = (text: string) => {
     const lines = text.split('\n');
@@ -56,16 +89,26 @@ const App: React.FC = () => {
 
       const data = responseData.data || responseData; // Handle both new and old formats
 
-      // Convert JSON response to Markdown table
-      let markdown = '';
-
-      markdown += `# Environment Variables\n\n| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
-
+      // Group variables by category
+      const grouped: Record<string, any[]> = {};
       Object.entries(data).forEach(([key, value]: [string, any]) => {
-        if (key === 'isFallback') return; // Skip metadata
-        if (!value || typeof value !== 'object') return; // Skip invalid entries
+        if (key === 'isFallback') return;
+        if (!value || typeof value !== 'object') return;
+        const cat = value.category || 'General';
+        if (!grouped[cat]) grouped[cat] = [];
+        grouped[cat].push({ key, ...value });
+      });
 
-        markdown += `| \`${key}\` | ${value.description || 'No description'} | ${value.type || 'String'} | ${value.required ? 'Yes' : 'No'} | \`${value.example || '—'}\` |\n`;
+      // Convert grouped data to Markdown
+      let markdown = `# Environment Documentation\n\n`;
+
+      Object.entries(grouped).forEach(([category, variables]) => {
+        markdown += `### 📂 ${category}\n\n`;
+        markdown += `| Variable | Description | Type | Required | Example |\n|----------|-------------|------|----------|---------|\n`;
+        variables.forEach(v => {
+          markdown += `| \`${v.key}\` | ${v.description || '—'} | ${v.type || 'String'} | ${v.required ? 'Yes' : 'No'} | \`${v.example || '—'}\` |\n`;
+        });
+        markdown += `\n`;
       });
 
       setGeneratedDoc(markdown);
@@ -94,6 +137,8 @@ const App: React.FC = () => {
         <div className="hidden md:flex gap-8 items-center">
           <a className="text-foreground font-bold border-b-2 border-foreground border-dashed pb-1 hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('home'); }}>Home</a>
           <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('docs'); window.scrollTo(0, 0); }}>Docs</a>
+          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('explorer'); fetchExplorerVars(); window.scrollTo(0, 0); }}>Explorer</a>
+          <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('changelog'); window.scrollTo(0, 0); }}>Changelog</a>
           <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="https://github.com/mohit45v/envdoc" target="_blank" rel="noreferrer">GitHub</a>
           <a className="text-foreground/80 hover:text-foreground transition-colors hover-jiggle" href="https://www.npmjs.com/package/envdoc-ai" target="_blank" rel="noreferrer">NPM</a>
         </div>
@@ -126,7 +171,7 @@ const App: React.FC = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 className="px-6 py-2 rounded-wobbly bg-[#fff9c4] border-[3px] border-border text-foreground font-body font-bold text-lg mb-8 shadow-[2px_2px_0px_0px_#2d2d2d] rotate-1"
               >
-                v1.0.4 is live
+                v1.1.0 • {stats.total}+ Variables Learned 🧠
               </motion.span>
 
               <motion.h1
@@ -370,6 +415,92 @@ const App: React.FC = () => {
               </div>
             </section>
           </>
+        ) : activeTab === 'explorer' ? (
+          <section className="py-12 md:py-20 min-h-[600px]">
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-4">Shared Brain Explorer</h2>
+              <p className="text-foreground/80 font-body text-xl max-w-2xl mx-auto">
+                Discover {stats.total} environment variables learned and shared by the community. 
+                Everything you see here is powered by AI and curated by users like you.
+              </p>
+            </div>
+
+            {isExplorerLoading ? (
+              <div className="flex flex-col items-center justify-center py-20">
+                <span className="animate-spin material-symbols-outlined text-6xl text-accent mb-4">autorenew</span>
+                <p className="font-body text-xl font-bold">Connecting to the Shared Brain...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {explorerVars.map((v, i) => (
+                  <motion.div
+                    key={v.key}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.03 }}
+                    className="bg-white border-[3px] border-border p-6 rounded-wobblyMd shadow-hard hover:-rotate-1 hover:scale-[1.02] transition-all group"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="px-3 py-1 bg-accent/10 border-2 border-accent/20 rounded-wobbly text-accent text-xs font-bold uppercase tracking-wider">
+                        {v.category || 'General'}
+                      </span>
+                      <span className="text-xs font-mono text-foreground/40 font-bold">{v.type}</span>
+                    </div>
+                    <h3 className="text-xl font-mono font-bold mb-3 text-foreground break-all">
+                      {v.key}
+                    </h3>
+                    <p className="text-foreground/70 font-body text-sm mb-4 line-clamp-3">
+                      {v.description}
+                    </p>
+                    <div className="pt-4 border-t-2 border-dashed border-border/10">
+                      <span className="text-[10px] text-foreground/40 font-bold uppercase block mb-1">Example Value</span>
+                      <code className="text-xs text-accent font-bold break-all bg-accent/5 p-1 rounded">
+                        {v.example || '—'}
+                      </code>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </section>
+        ) : activeTab === 'changelog' ? (
+          <section className="py-12 md:py-20 min-h-[600px]">
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl md:text-5xl font-headline font-bold mb-4">Changelog</h2>
+              <p className="text-foreground/80 font-body text-xl">The evolution of envdoc-ai.</p>
+            </div>
+
+            <div className="max-w-3xl mx-auto space-y-12">
+              {changelogData.map((item, i) => (
+                <motion.div
+                  key={item.version}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative pl-12 border-l-[3px] border-border/20 group"
+                >
+                  <div className="absolute left-[-11px] top-0 w-5 h-5 rounded-full bg-background border-[3px] border-border group-hover:bg-accent transition-colors"></div>
+                  
+                  <div className="bg-white border-[3px] border-border p-8 rounded-wobblyMd shadow-hard transform group-hover:-rotate-1 transition-transform">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                      <h3 className="text-2xl font-headline font-bold text-foreground">
+                        v{item.version} — {item.title}
+                      </h3>
+                      <span className="text-sm font-mono font-bold text-foreground/40">{item.date}</span>
+                    </div>
+                    <ul className="space-y-3">
+                      {item.changes.map((change, idx) => (
+                        <li key={idx} className="flex items-start gap-3 font-body text-lg text-foreground/80">
+                          <span className="material-symbols-outlined text-accent text-xl mt-1">check_circle</span>
+                          {change}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
         ) : (
           <section className="py-12 md:py-20">
             <div className="bg-[#fff9c4] border-[3px] border-border p-8 md:p-12 rounded-wobblyLg shadow-hard relative mb-12">
@@ -397,7 +528,7 @@ const App: React.FC = () => {
           </div>
           <div className="flex gap-8">
             <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('docs'); window.scrollTo(0, 0); }}>Docs</a>
-            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="#">Changelog</a>
+            <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold cursor-pointer" onClick={(e) => { e.preventDefault(); setActiveTab('changelog'); window.scrollTo(0, 0); }}>Changelog</a>
             <a className="text-xl font-body text-foreground/80 hover:text-accent hover:underline decoration-wavy transition-all font-bold" href="https://github.com/mohit45v/envdoc" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
