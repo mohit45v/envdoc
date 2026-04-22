@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import { Analytics } from '@vercel/analytics/react';
 import { docsMarkdown } from './docsContent';
 
 const App: React.FC = () => {
@@ -457,6 +458,7 @@ const App: React.FC = () => {
           padding-bottom: 0.2rem;
         }
       `}</style>
+      <Analytics />
     </div>
   );
 };
